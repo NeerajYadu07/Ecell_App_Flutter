@@ -1,42 +1,36 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'dart:io';
-
-
-
+import 'package:http/http.dart';
+import 'package:flutter/material.dart';
 
 
 
 class dictionary extends StatefulWidget {
-  dictionary({Key? key}) : super(key: key);
-
   @override
-  State<dictionary> createState() => _dictionaryState();
+  _dictionaryState createState() => _dictionaryState();
 }
 
 class _dictionaryState extends State<dictionary> {
-    String url = "https://owlbot.info/api/v4/dictionary/";
-    String token = "f58d2e2ffc435ea52e9bbe10d9eb9514f37c0a85";
+  String url = "https://owlbot.info/api/v4/dictionary/";
+  String token = "f58d2e2ffc435ea52e9bbe10d9eb9514f37c0a85";
 
   TextEditingController textEditingController = TextEditingController();
 
-
   // Stream for loading the text as soon as it is typed
  late StreamController streamController;
- late Stream  _stream;
- late Timer  _debounce;
+  late Stream _stream;
+
+ late Timer _debounce;
 
   // search function
   searchText() async {
     if (textEditingController.text == null ||
         textEditingController.text.length == 0) {
-        streamController.add(null);
-        return;
+      streamController.add(null);
+      return;
     }
     streamController.add("waiting");
-    http.Response response = await http.get(url + textEditingController.text.trim() as Uri,
+    Response response = await get(url + textEditingController.text.trim() as Uri,
         // do provide spacing after Token
         headers: {"Authorization": "Token " + token});
     streamController.add(json.decode(response.body));
@@ -53,7 +47,7 @@ class _dictionaryState extends State<dictionary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blueAccent,
         title: Text(
           "Dictionary",
           style: TextStyle(color: Colors.white),
@@ -69,7 +63,10 @@ class _dictionaryState extends State<dictionary> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       color: Colors.white),
-                  child: TextFormField(            
+                  child: TextFormField(
+                    onChanged: (String text) {
+                      searchText();
+                    },
                     controller: textEditingController,
                     decoration: InputDecoration(
                       hintText: "Search for a word",
@@ -148,4 +145,3 @@ class _dictionaryState extends State<dictionary> {
     );
   }
 }
-      

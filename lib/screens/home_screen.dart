@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                
               },
               child: Text(
-                "DICTIONARY",
+                "SEARCH WORD",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                 color: Colors.blue,
                 image: DecorationImage(
-                  image: AssetImage("assets/gold.jpg"),
+                  image: AssetImage("assets/download.jpg"),
                      fit: BoxFit.cover) ),
             ),
             ListTile(
